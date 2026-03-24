@@ -1,9 +1,13 @@
-import React from 'react';
+import Logout from "@/components/auth/Logout";
 
 const HomePage = () => {
   return (
-    <div>HomePage
-     </div>
+    <div>
+      HomePage
+      <div className="">
+        <Logout />
+      </div>
+    </div>
   );
 };
 

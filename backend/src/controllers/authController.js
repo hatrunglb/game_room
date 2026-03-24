@@ -15,7 +15,7 @@ export const signUp = async (req, res) => {
         }
 
         // ktr username trùng
-        const duplicate = await User.findOne({username});
+        const duplicate = await User.findOne({ username });
         if (duplicate) {
             return res.status(409).json({ message: 'username đã tồn tại' });
         }
@@ -45,7 +45,7 @@ export const signIn = async (req, res) => {
         // lấy input
         const { username, password } = req.body;
         if (!username || !password) {
-            return  res.status(400).json({ message: 'Thiếu username, password' });
+            return res.status(400).json({ message: 'Thiếu username, password' });
         }
 
         // lấy hashedPassword
@@ -59,7 +59,7 @@ export const signIn = async (req, res) => {
             return res.status(401).json({ message: 'Thông tin không chính xác' });
         }
 
-        const accessToken = jwt.sign({userId: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: ACCESS_TOKEN_TTL});
+        const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_TTL });
         const refreshtoken = crypto.randomBytes(64).toString('hex');
 
         await Session.create({
@@ -72,11 +72,11 @@ export const signIn = async (req, res) => {
         res.cookie('refreshToken', refreshtoken, {
             httpOnly: true,
             secure: true,
-            sameSite:'none', // BE ,FE deploy riêng
+            sameSite: 'none', // BE ,FE deploy riêng
             maxAge: REFRESH_TOKEN_TTL,
         });
 
-        return res.status(200).json({ message: `User ${user.displayName} đã logged in!`, accessToken})
+        return res.status(200).json({ message: `User ${user.displayName} đã logged in!`, accessToken })
 
     } catch (error) {
         console.error('Lỗi khi gọi signIn', error);
@@ -97,6 +97,37 @@ export const signOut = async (req, res) => {
 
     } catch (error) {
         console.error('Lỗi khi gọi signOut', error);
+        return res.status(500).json({ message: 'Lỗi hệ thống' });
+    }
+}
+
+// tạo access token mới từ refresh token
+export const refreshToken = async (req, res) => {
+    try {
+        // lấy refreshToken
+        const token = req.cookies?.refreshToken;
+        if (!token) {
+            console.log(req)
+            return res.status(401).json({ message: "Token không tồn tại", cookies: req.cookies });
+        }
+
+        const session = await Session.findOne({ refreshToken: token });
+
+        if (!session) {
+            return res.status(403).json({ message: "Token không hợp lệ hoặc hết hạn" });
+        }
+        if (session.expiresAt < new Date()) {
+            return res.status(403).json({ message: "Token hết hạn" });
+        }
+
+        const accessToken = jwt.sign({
+            userId: session.userId
+        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_TTL });
+
+        return res.status(200).json({ accessToken });
+
+    } catch (error) {
+        console.error('Lỗi khi gọi refreshToken', error);
         return res.status(500).json({ message: 'Lỗi hệ thống' });
     }
 }

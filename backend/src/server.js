@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import authRoute from './routes/authRoute.js';
 import userRoute from './routes/userRoute.js';
 import { protctedRoute } from './middlewares/authMiddleware.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 3108;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 
 app.get('/test', (req, res) => {
     res.send("Cổng 3108 đã thông!");
