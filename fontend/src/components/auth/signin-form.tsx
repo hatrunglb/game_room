@@ -54,12 +54,14 @@ export function SigninForm({ className, ...props }: React.ComponentProps<"div">)
                   <img
                     src="/favicon.svg"
                     alt="logo"
+                    height={120}
+                    width={120}
                   />
                 </a>
 
                 <h1 className="text-2xl font-bold">Chào mừng quay lại</h1>
                 <p className="text-muted-foreground text-balance">
-                  Đăng nhập vào tài khoản Moji của bạn
+                  Đăng nhập vào tài khoản GameRoom của bạn
                 </p>
               </div>
 
@@ -74,7 +76,7 @@ export function SigninForm({ className, ...props }: React.ComponentProps<"div">)
                 <Input
                   type="text"
                   id="username"
-                  placeholder="moji"
+                  placeholder="GameRoom"
                   {...register("username")}
                 />
                 {errors.username && (
@@ -126,9 +128,9 @@ export function SigninForm({ className, ...props }: React.ComponentProps<"div">)
           </form>
           <div className="bg-muted relative hidden md:block">
             <img
-              src="/hero.png"
+              src="/dragon.svg"
               alt="Image"
-              className="absolute top-1/2 -translate-y-1/2 object-cover"
+              className="absolute top-1/2 -translate-y-1/2 object-cover rotate-y-180 rotate-z-45"
             />
           </div>
         </CardContent>
