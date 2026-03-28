@@ -1,13 +1,16 @@
-import Logout from "@/components/auth/Logout";
+import ChartWindowLayout from "@/components/chat/ChartWindowLayout";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const HomePage = () => {
   return (
-    <div>
-      HomePage
-      <div className="">
-        <Logout />
+    <SidebarProvider>
+      <AppSidebar />
+
+      <div className="flex">
+        <ChartWindowLayout />
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
