@@ -1,4 +1,4 @@
-import { Bell, ChevronsUpDown, UserIcon } from "lucide-react";
+import { Bell, BellDot, ChevronsUpDown, UserIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -85,6 +85,7 @@ export function NavUser({ user }: { user: User }) {
                 <DropdownMenuItem onClick={() => setfriendRequestOpen(true)}>
                   <Bell className="text-muted-foreground dark:group-focus:!text-accent-foreground" />
                   Thông Báo
+                  <BellDot className="text-muted-foreground dark:group-focus:!text-accent-foreground" />
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />

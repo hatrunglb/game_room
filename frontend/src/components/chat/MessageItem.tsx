@@ -24,8 +24,8 @@ const MessageItem = ({
   const isShowTime =
     index === 0 ||
     new Date(message.createdAt).getTime() -
-      new Date(prev?.createdAt || 0).getTime() >
-      300000; // 5 phút
+    new Date(prev?.createdAt || 0).getTime() >
+    300000; // 5 phút
 
   const isGroupBreak = isShowTime || message.senderId !== prev?.senderId;
 
@@ -54,7 +54,7 @@ const MessageItem = ({
             {isGroupBreak && (
               <UserAvatar
                 type="chat"
-                name={participant?.displayName ?? "Moji"}
+                name={participant?.displayName ?? "Game Room"}
                 avatarUrl={participant?.avatarUrl ?? undefined}
               />
             )}

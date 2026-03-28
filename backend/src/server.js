@@ -10,6 +10,8 @@ import conversationRoute from "./routes/conversationRoute.js";
 import { protctedRoute } from './middlewares/authMiddleware.js';
 import cors from 'cors';
 import { app, server } from './socket/index.js';
+import { v2 as cloudinary } from "cloudinary";
+
 
 dotenv.config();
 
@@ -20,6 +22,13 @@ const PORT = process.env.PORT || 3108;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
+
+// CLOUDINARY Configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.get('/test', (req, res) => {
     res.send("Cổng 3108 đã thông!");
