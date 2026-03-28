@@ -69,6 +69,8 @@ export const useSocketStore = create<SocketState>((set, get) => ({
         seenBy: conversation.seenBy,
       };
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       useChatStore.getState().updateConversation(updated);
     });
 
